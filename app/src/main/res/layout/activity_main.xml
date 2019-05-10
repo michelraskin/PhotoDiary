@@ -95,6 +95,7 @@
         android:layout_marginEnd="69dp"
         android:text="Display the date and time chosen by the user and asks if he wants to go to that by pressing diary"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="491dp" />
+        tools:layout_editor_absoluteY="466dp" />
 </android.support.constraint.ConstraintLayout>

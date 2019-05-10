@@ -17,8 +17,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toDiary(View view) {
-        //sends the user to the view activity with the correct date and time selected if none is selected show try again option
+        //sends the user to the view activity with the correct date
+        // and time selected if none is selected show try again option
     }
-
-
 }
