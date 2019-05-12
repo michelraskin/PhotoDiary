@@ -48,8 +48,8 @@ public class DiaryActivity extends Activity {
         try {
             BufferedReader bf = new BufferedReader(new FileReader(file));
 
-            for (int i = 0; i < file.length(); i++) {
-                String line = bf.readLine();
+            String line;
+            while ((line = bf.readLine()) != null) {
                 String[] things = line.split(",");
 
                 if (things[0].equals(date)) {
