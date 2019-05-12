@@ -1,6 +1,7 @@
 package com.example.adroidproject;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,7 +23,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PhotoActivity extends AppCompatActivity implements LocationListener {
+public class PhotoActivity extends Activity implements LocationListener {
     LocationManager mLocationManager;
     private String file_path;
 

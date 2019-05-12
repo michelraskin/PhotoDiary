@@ -58,44 +58,55 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="117dp"
         android:layout_marginEnd="81dp"
+        android:layout_marginBottom="21dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Date Or Time"
+        app:layout_constraintBottom_toTopOf="@+id/timeOpt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="144dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/diaryData"
         android:layout_width="196dp"
-        android:layout_height="72dp"
+        android:layout_height="55dp"
         android:layout_marginStart="117dp"
+        android:layout_marginTop="33dp"
         android:layout_marginEnd="98dp"
+        android:layout_marginBottom="600dp"
         android:text="Will First ask for the date, then show the times option then ask for the time"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="51dp" />
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <TextView
         android:id="@+id/timeOpt"
         android:layout_width="228dp"
-        android:layout_height="200dp"
+        android:layout_height="210dp"
         android:layout_marginStart="102dp"
+        android:layout_marginTop="200dp"
         android:layout_marginEnd="81dp"
+        android:layout_marginBottom="56dp"
         android:text="Will be Used to display time options for the user to select"
+        app:layout_constraintBottom_toTopOf="@+id/Choices"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="210dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/Choices"
         android:layout_width="273dp"
         android:layout_height="68dp"
         android:layout_marginStart="69dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="69dp"
+        android:layout_marginBottom="111dp"
         android:text="Display the date and time chosen by the user and asks if he wants to go to that by pressing diary"
+        app:layout_constraintBottom_toTopOf="@+id/takePicture"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="466dp" />
+        app:layout_constraintTop_toBottomOf="@+id/timeOpt" />
 </android.support.constraint.ConstraintLayout>
