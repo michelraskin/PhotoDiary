@@ -16,6 +16,9 @@ public class MainActivity extends Activity {
 
     public void toPhoto(View view) {
         //sends the user to the photo activity
+        Intent intent = new Intent(MainActivity.this, PhotoActivity.class);
+
+        startActivity(intent);
     }
 
     public void toDiary(View view) {
@@ -24,7 +27,9 @@ public class MainActivity extends Activity {
 
         Intent intent = new Intent(MainActivity.this, DiaryActivity.class);
 
-        intent.putExtra("date", "aqui voce bota a string com data e hora");
+
+
+        intent.putExtra("date", "");
 
         startActivity(intent);
     }
