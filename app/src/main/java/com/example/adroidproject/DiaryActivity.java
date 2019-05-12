@@ -1,5 +1,6 @@
 package com.example.adroidproject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -31,7 +32,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-public class DiaryActivity extends AppCompatActivity {
+public class DiaryActivity extends Activity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
