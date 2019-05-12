@@ -38,7 +38,7 @@ public class DiaryActivity extends Activity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary);
-        final File file = new File("our.txt");
+        final File file = new File("file.txt");
 
         Intent intent = getIntent();
         final String date = intent.getStringExtra("date");
@@ -79,14 +79,14 @@ public class DiaryActivity extends Activity {
                     String text = String.valueOf(editText.getText());
 
                     textview.setText(text);
-                    File file2 = new File("our2.txt");
+                    File file2 = new File("file2.txt");
                     try {
                         BufferedReader bf = new BufferedReader(new FileReader(file));
                         PrintWriter pw = new PrintWriter(new FileWriter(file2));
                         PrintWriter pw2 = new PrintWriter(new FileWriter(file));
                         BufferedReader bf2 = new BufferedReader(new FileReader(file2));
-                        for (int i = 0; i < file.length(); i++) {
-                            String line = bf.readLine();
+                        String line;
+                        while ((line = bf.readLine()) != null) {
                             String[] splitted = line.split(",");
                             if (splitted[0].equals(date)) {
                                 pw.println(splitted[0] + "," + splitted[1] + "," + splitted[2] + "," + text);
@@ -94,12 +94,13 @@ public class DiaryActivity extends Activity {
                                 pw.println(line);
                             }
                         }
-                        Files.newBufferedWriter(Paths.get("our.txt"), StandardOpenOption.TRUNCATE_EXISTING);
-                        for (int i = 0; i < file2.length(); i++) {
-                            pw2.println(bf2.readLine());
+                        Files.newBufferedWriter(Paths.get("file.txt"), StandardOpenOption.TRUNCATE_EXISTING);
+                        String line2;
+                        while ((line2 = bf2.readLine()) != null) {
+                            pw2.println(line2);
                         }
 
-                        Files.newBufferedWriter(Paths.get("our2.txt"), StandardOpenOption.TRUNCATE_EXISTING);
+                        Files.newBufferedWriter(Paths.get("file2.txt"), StandardOpenOption.TRUNCATE_EXISTING);
 
                         bf.close();
                         pw.close();
