@@ -1,7 +1,13 @@
 package com.example.adroidproject;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,22 +22,28 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 public class DiaryActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary);
-        File file = new File("our.txt");
+        final File file = new File("our.txt");
 
         Intent intent = getIntent();
-        String date = intent.getStringExtra("date");
+        final String date = intent.getStringExtra("date");
         final TextView textview = findViewById(R.id.legend);
         final TextView textView2 = findViewById(R.id.location);
+        final TextView textView3 = findViewById(R.id.date);
         try {
             BufferedReader bf = new BufferedReader(new FileReader(file));
 
@@ -40,15 +52,16 @@ public class DiaryActivity extends AppCompatActivity {
                 String[] things = line.split(",");
 
                 if (things[0].equals(date)) {
-                    Uri uri = (Uri) things[1];
-                    if (uri != null) {
-                        displayImage(uri);
-                    }
 
+                    displayImage(things[1]);
+                    textView3.setText(things[0]);
                     textview.setText(things[3]);
                     textView2.setText(things[2]);
+
                 }
             }
+
+            bf.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -58,12 +71,44 @@ public class DiaryActivity extends AppCompatActivity {
         final EditText editText = findViewById(R.id.editLegend);
 
         editText.setOnKeyListener(new View.OnKeyListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
 
                     String text = String.valueOf(editText.getText());
 
                     textview.setText(text);
+                    File file2 = new File("our2.txt");
+                    try {
+                        BufferedReader bf = new BufferedReader(new FileReader(file));
+                        PrintWriter pw = new PrintWriter(new FileWriter(file2));
+                        PrintWriter pw2 = new PrintWriter(new FileWriter(file));
+                        BufferedReader bf2 = new BufferedReader(new FileReader(file2));
+                        for (int i = 0; i < file.length(); i++) {
+                            String line = bf.readLine();
+                            String[] splitted = line.split(",");
+                            if (splitted[0].equals(date)) {
+                                pw.println(splitted[0] + "," + splitted[1] + "," + splitted[2] + "," + text);
+                            } else {
+                                pw.println(line);
+                            }
+                        }
+                        Files.newBufferedWriter(Paths.get("our.txt"), StandardOpenOption.TRUNCATE_EXISTING);
+                        for (int i = 0; i < file2.length(); i++) {
+                            pw2.println(bf2.readLine());
+                        }
+
+                        Files.newBufferedWriter(Paths.get("our2.txt"), StandardOpenOption.TRUNCATE_EXISTING);
+
+                        bf.close();
+                        pw.close();
+                        pw2.close();
+                        bf2.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                     return true;
                 }
@@ -73,10 +118,10 @@ public class DiaryActivity extends AppCompatActivity {
 
     }
 
-    private void displayImage(Uri uri) {
+    private void displayImage(String path) {
         ImageView imageView = findViewById(R.id.imageView);
-
-        imageView.setImageURI(uri);
+        Bitmap bitmap = BitmapFactory.decodeFile(path);
+        imageView.setImageBitmap(bitmap);
     }
 
     public void toLocation(View view) {
