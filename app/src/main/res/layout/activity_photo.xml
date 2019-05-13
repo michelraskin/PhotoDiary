@@ -7,6 +7,7 @@
     tools:context=".PhotoActivity">
 
     <FrameLayout
+        android:id="@+id/background"
         android:layout_width="395dp"
         android:layout_height="556dp"
         android:layout_marginStart="8dp"
@@ -26,13 +27,29 @@
         android:id="@+id/takePicture"
         android:layout_width="96dp"
         android:layout_height="60dp"
-        android:layout_marginStart="161dp"
+        android:layout_marginStart="43dp"
         android:layout_marginTop="600dp"
-        android:layout_marginEnd="162dp"
+        android:layout_marginEnd="272dp"
         android:layout_marginBottom="50dp"
         android:text="takePicture"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.666" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="92dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="146dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="34dp"
+        android:layout_marginBottom="64dp"
+        android:text="Button"
+        android:onClick="back2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/takePicture"
+        app:layout_constraintTop_toBottomOf="@+id/background" />
 </android.support.constraint.ConstraintLayout>

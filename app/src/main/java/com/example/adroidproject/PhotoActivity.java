@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import java.io.File;
@@ -41,11 +42,16 @@ public class PhotoActivity extends Activity implements LocationListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
-
+        background = findViewById(R.id.background);
         camera = Camera.open();
 
-        cameraPreview = new CameraPreview(this, camera);
+        cameraPreview = new CameraPreview(PhotoActivity.this, camera);
         background.addView(cameraPreview);
+    }
+
+    public void back2(View view) {
+        Intent intent = new Intent(PhotoActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
     static final int TAKE_PHOTO = 1;
