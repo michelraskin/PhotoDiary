@@ -3,6 +3,7 @@ package com.example.adroidproject;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
@@ -18,9 +19,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class MainActivity extends Activity {
     private String text = "";
+    private int option = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,17 +38,18 @@ public class MainActivity extends Activity {
             @SuppressLint("SetTextI18n")
             @RequiresApi(api = Build.VERSION_CODES.O)
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-
+                if (keyCode == KeyEvent.KEYCODE_ENTER && option == 1) {
+                    option = 2;
                     text = "";
 
                     String line;
                     text = String.valueOf(editText.getText());
-                    textView2.setText(text);
-                    File sdcard = Environment.getExternalStorageDirectory();
-                    File file = new File(sdcard,"file.txt");
+                    String text2 = text;
+                    textView2.setText(text2);
                     try {
-                        BufferedReader bf = new BufferedReader(new FileReader(file));
+                        AssetManager assetManager = getAssets();
+                        InputStream input = assetManager.open("file.txt");
+                        BufferedReader bf = new BufferedReader(new InputStreamReader(input));
                         while ((line = bf.readLine()) != null) {
                             String[] things = line.split(",");
                             String[] date = things[0].split("_");
@@ -62,9 +67,11 @@ public class MainActivity extends Activity {
                         e.printStackTrace();
                     }
                     return true;
-                } else if (keyCode == KeyEvent.KEYCODE_A) {
+                } else if (keyCode == KeyEvent.KEYCODE_ENTER && option == 2) {
                     text = text + String.valueOf(editText.getText());
-                    textView1.setText(text);
+                    String text2 = text;
+                    option = 1;
+                    textView1.setText(text2);
                     return true;
                 }
                 return false;
