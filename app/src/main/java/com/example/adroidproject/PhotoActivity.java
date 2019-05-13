@@ -88,7 +88,7 @@ public class PhotoActivity extends Activity implements LocationListener {
     }
 
     private String fileCreate(String time, String photo_path) {
-        String file_name = "Diary_Picture_" + time + ".txt";
+        String file_name = "file.txt";
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         Location location = null;
@@ -99,7 +99,7 @@ public class PhotoActivity extends Activity implements LocationListener {
         }
         try {
             PrintWriter writer = new PrintWriter(file_name);
-            writer.print(time + "," + photo_path + "," + location.getLatitude() + location.getLongitude() + ",");
+            writer.println(time + "," + photo_path + "," + location.getLatitude() + location.getLongitude() + ",");
             writer.close();
         } catch (Exception exc) {
             System.out.println("Error writing to new image file" + exc.getMessage());
