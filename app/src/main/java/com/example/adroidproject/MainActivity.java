@@ -41,8 +41,10 @@ public class MainActivity extends Activity {
                     String line;
                     text = String.valueOf(editText.getText());
                     textView2.setText(text);
+                    File sdcard = Environment.getExternalStorageDirectory();
+                    File file = new File(sdcard,"file.txt");
                     try {
-                        BufferedReader bf = new BufferedReader(new FileReader("file.txt"));
+                        BufferedReader bf = new BufferedReader(new FileReader(file));
                         while ((line = bf.readLine()) != null) {
                             String[] things = line.split(",");
                             String[] date = things[0].split("_");
@@ -52,7 +54,7 @@ public class MainActivity extends Activity {
 
                             }
                         }
-                        editText.setText("Press up when time is selected");
+                        editText.setText("Press a when time is selected");
                         bf.close();
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -60,7 +62,7 @@ public class MainActivity extends Activity {
                         e.printStackTrace();
                     }
                     return true;
-                } else if (keyCode == KeyEvent.ACTION_DOWN) {
+                } else if (keyCode == KeyEvent.KEYCODE_A) {
                     text = text + String.valueOf(editText.getText());
                     textView1.setText(text);
                     return true;
