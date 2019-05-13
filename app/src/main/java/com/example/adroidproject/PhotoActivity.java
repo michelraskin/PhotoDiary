@@ -13,6 +13,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -56,7 +58,7 @@ public class PhotoActivity extends Activity implements LocationListener {
 
     static final int TAKE_PHOTO = 1;
 
-    private void pictureClick(View view) {
+    public void pictureClick(View view) {
         String time = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date());
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -64,39 +66,40 @@ public class PhotoActivity extends Activity implements LocationListener {
 
             File photo = null;
             try {
-                photo = saveImage(time);
+                photo = File.createTempFile("PHOTO_" + time, ".jpg", getExternalFilesDir(Environment.DIRECTORY_PICTURES));
             } catch (IOException io) {
                 System.out.println("Error saving image: " + io.getMessage());
                 return;
             }
-            file_path = fileCreate(time, photo.getPath());
+            //file_path = fileCreate(time, photo.getPath());
 
-            if (file_path != null) {
-                Uri uri_photo = FileProvider.getUriForFile(this, "com.example.android.fileprovider", photo);
+           // if (file_path != null) {
+                Uri uri_photo = FileProvider.getUriForFile(this, "com.example.adroidproject.fileprovider", photo);
 
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri_photo);
                 startActivityForResult(takePictureIntent, TAKE_PHOTO);
-
-            }
+                galleryAddPic(photo.getAbsolutePath());
+           // }
         }
     }
 
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode) {
-        if (requestCode == TAKE_PHOTO && resultCode == RESULT_OK) {
-
-
-        }
+    private void galleryAddPic(String currentPhotoPath) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(currentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
     }
-*/
-    private File saveImage(String time) throws IOException {
-        return File.createTempFile("PHOTO_" + time, ".jpg", getExternalFilesDir(Environment.DIRECTORY_PICTURES));
+
+     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
+
 
     private String fileCreate(String time, String photo_path) {
         String file_name = "file.txt";
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
+        File file = new File(file_name);
         Location location = null;
         try {
             location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -104,7 +107,7 @@ public class PhotoActivity extends Activity implements LocationListener {
             System.out.println("Permission not granted - Failure");
         }
         try {
-            PrintWriter writer = new PrintWriter(file_name);
+            PrintWriter writer = new PrintWriter(new FileWriter(file));
             writer.println(time + "," + photo_path + "," + location.getLatitude() + location.getLongitude() + ",");
             writer.close();
         } catch (Exception exc) {
