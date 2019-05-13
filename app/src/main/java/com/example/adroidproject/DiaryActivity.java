@@ -2,6 +2,7 @@ package com.example.adroidproject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -22,11 +23,13 @@ import android.widget.TextView;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -38,14 +41,18 @@ public class DiaryActivity extends Activity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary);
-        final File file = new File("file.txt");
 
         Intent intent = getIntent();
         final String date = intent.getStringExtra("date");
         final TextView textview = findViewById(R.id.legend);
+        textview.setText(date);
         final TextView textView2 = findViewById(R.id.location);
         final TextView textView3 = findViewById(R.id.date);
+        final File file = new File(getFilesDir(), "file.txt");
+        final File file2 = new File(getFilesDir(), "file2.txt");
         try {
+
+
             BufferedReader bf = new BufferedReader(new FileReader(file));
 
             String line;
@@ -79,8 +86,8 @@ public class DiaryActivity extends Activity {
                     String text = String.valueOf(editText.getText());
 
                     textview.setText(text);
-                    File file2 = new File("file2.txt");
                     try {
+;
                         BufferedReader bf = new BufferedReader(new FileReader(file));
                         PrintWriter pw = new PrintWriter(new FileWriter(file2));
                         PrintWriter pw2 = new PrintWriter(new FileWriter(file));
@@ -89,18 +96,18 @@ public class DiaryActivity extends Activity {
                         while ((line = bf.readLine()) != null) {
                             String[] splitted = line.split(",");
                             if (splitted[0].equals(date)) {
-                                pw.println(splitted[0] + "," + splitted[1] + "," + splitted[2] + "," + text);
+                                pw.append(splitted[0] + "," + splitted[1] + "," + splitted[2] + "," + text + "\n");
                             } else {
-                                pw.println(line);
+                                pw.append(line + "\n");
                             }
                         }
-                        Files.newBufferedWriter(Paths.get("file.txt"), StandardOpenOption.TRUNCATE_EXISTING);
+                        Files.newBufferedWriter(Paths.get(String.valueOf(file)), StandardOpenOption.TRUNCATE_EXISTING);
                         String line2;
                         while ((line2 = bf2.readLine()) != null) {
                             pw2.println(line2);
                         }
 
-                        Files.newBufferedWriter(Paths.get("file2.txt"), StandardOpenOption.TRUNCATE_EXISTING);
+                        Files.newBufferedWriter(Paths.get(String.valueOf(file2)), StandardOpenOption.TRUNCATE_EXISTING);
 
                         bf.close();
                         pw.close();

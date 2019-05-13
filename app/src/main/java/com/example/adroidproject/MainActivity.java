@@ -18,9 +18,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 public class MainActivity extends Activity {
     private String text = "";
@@ -43,13 +48,17 @@ public class MainActivity extends Activity {
                     text = "";
 
                     String line;
-                    text = String.valueOf(editText.getText());
+                    String text3 = String.valueOf(editText.getText());
+                    text = text3;
                     String text2 = text;
                     textView2.setText(text2);
                     try {
-                        AssetManager assetManager = getAssets();
-                        InputStream input = assetManager.open("file.txt");
-                        BufferedReader bf = new BufferedReader(new InputStreamReader(input));
+                        File file = new File(getFilesDir(), "file.txt");
+                        BufferedReader bf = new BufferedReader(new FileReader(file));
+
+
+
+                        textView.setText("");
                         while ((line = bf.readLine()) != null) {
                             String[] things = line.split(",");
                             String[] date = things[0].split("_");
@@ -59,7 +68,6 @@ public class MainActivity extends Activity {
 
                             }
                         }
-                        editText.setText("Press a when time is selected");
                         bf.close();
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -68,9 +76,11 @@ public class MainActivity extends Activity {
                     }
                     return true;
                 } else if (keyCode == KeyEvent.KEYCODE_ENTER && option == 2) {
-                    text = text + String.valueOf(editText.getText());
+                    String text3 = String.valueOf(editText.getText());
+                    text = text3;
                     String text2 = text;
                     option = 1;
+                    textView1.clearComposingText();
                     textView1.setText(text2);
                     return true;
                 }
