@@ -1,8 +1,10 @@
 package com.example.adroidproject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,15 +29,20 @@ public class MainActivity extends Activity {
         final EditText editText = findViewById(R.id.dateTime);
         final TextView textView = findViewById(R.id.timeOpt);
         final TextView textView1 = findViewById(R.id.Choices);
+        final TextView textView2 = findViewById(R.id.diaryData);
         editText.setOnKeyListener(new View.OnKeyListener() {
+            @SuppressLint("SetTextI18n")
             @RequiresApi(api = Build.VERSION_CODES.O)
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
+
+                    text = "";
+
+                    String line;
+                    text = String.valueOf(editText.getText());
+                    textView2.setText(text);
                     try {
-                        text = "";
-                        BufferedReader bf = new BufferedReader(new FileReader(new File("file.txt")));
-                        String line;
-                        text = String.valueOf(editText.getText());
+                        BufferedReader bf = new BufferedReader(new FileReader("file.txt"));
                         while ((line = bf.readLine()) != null) {
                             String[] things = line.split(",");
                             String[] date = things[0].split("_");
@@ -56,6 +63,7 @@ public class MainActivity extends Activity {
                 } else if (keyCode == KeyEvent.ACTION_DOWN) {
                     text = text + String.valueOf(editText.getText());
                     textView1.setText(text);
+                    return true;
                 }
                 return false;
             }
