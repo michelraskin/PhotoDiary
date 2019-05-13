@@ -56,7 +56,7 @@ public class PhotoActivity extends Activity implements LocationListener {
 
     static final int TAKE_PHOTO = 1;
 
-    private void pictureClick() {
+    private void pictureClick(View view) {
         String time = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date());
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
