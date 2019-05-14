@@ -89,26 +89,29 @@ public class DiaryActivity extends Activity {
                     try {
 
                         BufferedReader bf = new BufferedReader(new FileReader(file));
-                        PrintWriter pw = new PrintWriter(new FileWriter(file2));
-                        PrintWriter pw2 = new PrintWriter(new FileWriter(file));
+                        PrintWriter pw = new PrintWriter(new FileWriter(file2, true));
+                        PrintWriter pw2 = new PrintWriter(new FileWriter(file, true));
                         BufferedReader bf2 = new BufferedReader(new FileReader(file2));
                         String line;
                         while ((line = bf.readLine()) != null) {
                             String[] splitted = line.split(",");
+
                             if (splitted[0].equals(date)) {
-                                pw.append(splitted[0] + "," + splitted[1] + "," + splitted[2] + "," + text + "\n");
+                                pw.println(splitted[0] + "," + splitted[1] + "," + splitted[2] + "," + text);
                             } else {
-                                pw.append(line + "\n");
+                                pw.println(line);
                             }
                         }
-                        Files.newBufferedWriter(Paths.get(String.valueOf(file)), StandardOpenOption.TRUNCATE_EXISTING);
+                        PrintWriter pw3 = new PrintWriter(new FileWriter(file));
+                        pw3.println("");
+                        pw3.close();
                         String line2;
                         while ((line2 = bf2.readLine()) != null) {
                             pw2.println(line2);
                         }
-
-                        Files.newBufferedWriter(Paths.get(String.valueOf(file2)), StandardOpenOption.TRUNCATE_EXISTING);
-
+                        PrintWriter pw4 = new PrintWriter(new FileWriter(file2));
+                        pw4.println("");
+                        pw4.close();
                         bf.close();
                         pw.close();
                         pw2.close();

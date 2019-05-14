@@ -54,10 +54,8 @@ public class MainActivity extends Activity {
                     textView2.setText(text2);
                     try {
                         File file = new File(getFilesDir(), "file.txt");
+
                         BufferedReader bf = new BufferedReader(new FileReader(file));
-
-
-
                         textView.setText("");
                         while ((line = bf.readLine()) != null) {
                             String[] things = line.split(",");
