@@ -87,7 +87,7 @@ public class DiaryActivity extends Activity {
 
                     textview.setText(text);
                     try {
-;
+
                         BufferedReader bf = new BufferedReader(new FileReader(file));
                         PrintWriter pw = new PrintWriter(new FileWriter(file2));
                         PrintWriter pw2 = new PrintWriter(new FileWriter(file));
