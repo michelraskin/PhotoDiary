@@ -195,8 +195,8 @@ public class PhotoActivity extends Activity implements LocationListener {
 
         @Override
         public void surfaceDestroyed(SurfaceHolder holder) {
-            camera.stopPreview();
-            camera.release();
+            //camera.stopPreview();
+            //camera.release();
         }
     }
 }
