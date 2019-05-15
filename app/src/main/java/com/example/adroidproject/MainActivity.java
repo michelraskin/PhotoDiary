@@ -37,7 +37,6 @@ public class MainActivity extends Activity {
 
         final EditText editText = findViewById(R.id.dateTime);
         final TextView textView = findViewById(R.id.timeOpt);
-        final TextView textView1 = findViewById(R.id.Choices);
         final TextView textView2 = findViewById(R.id.diaryData);
         editText.setOnKeyListener(new View.OnKeyListener() {
             @SuppressLint("SetTextI18n")
@@ -77,8 +76,6 @@ public class MainActivity extends Activity {
                     text = text3;
                     String text2 = text;
                     option = 1;
-                    textView1.clearComposingText();
-                    textView1.setText(text2);
                     return true;
                 }
                 return false;
