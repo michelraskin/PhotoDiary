@@ -51,6 +51,8 @@ public class PhotoActivity extends Activity implements LocationListener {
 
         cameraPreview = new CameraPreview(PhotoActivity.this, camera);
         background.addView(cameraPreview);
+        camera.setDisplayOrientation(90);
+
     }
 
     public void back2(View view) {
@@ -148,6 +150,7 @@ public class PhotoActivity extends Activity implements LocationListener {
         public CameraPreview(Context context, Camera camera) {
             super(context);
             mCamera = camera;
+
 
             // Install a SurfaceHolder.Callback so we get notified when the
             // underlying surface is created and destroyed.
