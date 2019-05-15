@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static android.content.ContentValues.TAG;
+import static android.os.Environment.getExternalStoragePublicDirectory;
 
 public class PhotoActivity extends Activity implements LocationListener {
     LocationManager mLocationManager;
@@ -62,34 +63,35 @@ public class PhotoActivity extends Activity implements LocationListener {
     public void pictureClick(View view) {
         String time = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date());
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(takePictureIntent, TAKE_PHOTO);
 
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
 
             File photo = null;
             try {
                 photo = File.createTempFile("PHOTO_" + time, ".jpg", getExternalFilesDir(Environment.DIRECTORY_PICTURES));
+
             } catch (IOException io) {
                 System.out.println("Error saving image: " + io.getMessage());
                 return;
             }
-            addImageToGallery(photo.getAbsolutePath(), this);
+            if (photo != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.example.adroidproject.fileprovider",
+                        photo);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, TAKE_PHOTO);
+
+            }
+            galleryAddPic(photo.getAbsolutePath());
+
             //file_path = fileCreate(time, photo.getPath());
 
         }
     }
 
-    public static void addImageToGallery(final String filePath, final Context context) {
 
-        ContentValues values = new ContentValues();
 
-        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
-        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-        values.put(MediaStore.MediaColumns.DATA, filePath);
-
-        context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-    }
-    //
-/*
     private void galleryAddPic(String currentPhotoPath) {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(currentPhotoPath);
@@ -97,7 +99,7 @@ public class PhotoActivity extends Activity implements LocationListener {
         mediaScanIntent.setData(contentUri);
         this.sendBroadcast(mediaScanIntent);
     }
-*/
+
 
      protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
