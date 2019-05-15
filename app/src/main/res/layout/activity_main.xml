@@ -73,16 +73,15 @@
 
     <TextView
         android:id="@+id/diaryData"
-        android:layout_width="196dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="117dp"
+        android:layout_width="320dp"
+        android:layout_height="73dp"
+        android:layout_marginStart="67dp"
         android:layout_marginTop="175dp"
-        android:layout_marginEnd="98dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="450dp"
-        android:text="Will First ask for the date, then show the times option then ask for the time"
+        android:text="First input the date of the photo, then from the list put the whole date on the following format: yyyy-MM-dd_hh:mm:ss and press diary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
