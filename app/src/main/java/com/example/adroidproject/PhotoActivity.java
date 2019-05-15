@@ -99,7 +99,7 @@ public class PhotoActivity extends Activity implements LocationListener {
     private String fileCreate(String time, String photo_path) {
         String file_name = "file.txt";
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        File file = new File(file_name);
+        File file = new File(getFilesDir(), file_name);
         Location location = null;
         try {
             location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -107,7 +107,7 @@ public class PhotoActivity extends Activity implements LocationListener {
             System.out.println("Permission not granted - Failure");
         }
         try {
-            PrintWriter writer = new PrintWriter(new FileWriter(file));
+            PrintWriter writer = new PrintWriter(new FileWriter(file, true));
             writer.println(time + "," + photo_path + "," + location.getLatitude() + location.getLongitude() + ",");
             writer.close();
         } catch (Exception exc) {
