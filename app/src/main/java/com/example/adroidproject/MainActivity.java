@@ -51,7 +51,6 @@ public class MainActivity extends Activity {
                     String text3 = String.valueOf(editText.getText());
                     text = text3;
                     String text2 = text;
-                    textView2.setText(text2);
                     try {
                         File file = new File(getFilesDir(), "file.txt");
 
@@ -62,7 +61,7 @@ public class MainActivity extends Activity {
                             String[] date = things[0].split("_");
 
                             if (date[0].equals(text)) {
-                                textView.append(date[1] + "\n");
+                                textView.append(date[1] + "    ");
 
                             }
                         }
