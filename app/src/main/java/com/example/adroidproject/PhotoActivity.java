@@ -2,6 +2,7 @@ package com.example.adroidproject;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -71,18 +72,24 @@ public class PhotoActivity extends Activity implements LocationListener {
                 System.out.println("Error saving image: " + io.getMessage());
                 return;
             }
+            addImageToGallery(photo.getAbsolutePath(), this);
             //file_path = fileCreate(time, photo.getPath());
 
-           // if (file_path != null) {
-                Uri uri_photo = FileProvider.getUriForFile(this, "com.example.adroidproject.fileprovider", photo);
-
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri_photo);
-                startActivityForResult(takePictureIntent, TAKE_PHOTO);
-                galleryAddPic(photo.getAbsolutePath());
-           // }
         }
     }
 
+    public static void addImageToGallery(final String filePath, final Context context) {
+
+        ContentValues values = new ContentValues();
+
+        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+        values.put(MediaStore.MediaColumns.DATA, filePath);
+
+        context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+    }
+    //
+/*
     private void galleryAddPic(String currentPhotoPath) {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(currentPhotoPath);
@@ -90,6 +97,7 @@ public class PhotoActivity extends Activity implements LocationListener {
         mediaScanIntent.setData(contentUri);
         this.sendBroadcast(mediaScanIntent);
     }
+*/
 
      protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
