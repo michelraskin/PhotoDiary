@@ -63,7 +63,6 @@ public class PhotoActivity extends Activity implements LocationListener {
     public void pictureClick(View view) {
         String time = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date());
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(takePictureIntent, TAKE_PHOTO);
 
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
 
@@ -83,9 +82,9 @@ public class PhotoActivity extends Activity implements LocationListener {
                 startActivityForResult(takePictureIntent, TAKE_PHOTO);
 
             }
-            galleryAddPic(photo.getAbsolutePath());
+            galleryAddPic(photo.getPath());
 
-            //file_path = fileCreate(time, photo.getPath());
+            file_path = fileCreate(time, photo.getPath());
 
         }
     }
@@ -98,6 +97,7 @@ public class PhotoActivity extends Activity implements LocationListener {
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
         this.sendBroadcast(mediaScanIntent);
+
     }
 
 

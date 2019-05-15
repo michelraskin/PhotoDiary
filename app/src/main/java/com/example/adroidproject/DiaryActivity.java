@@ -58,14 +58,17 @@ public class DiaryActivity extends Activity {
             String line;
             while ((line = bf.readLine()) != null) {
                 String[] things = line.split(",");
+                if (things.length >= 3) {
+                    if (things[0].equals(date)) {
 
-                if (things[0].equals(date)) {
+                        displayImage(things[1]);
+                        textView3.setText(things[0]);
+                        if (things.length >= 4) {
+                            textview.setText(things[3]);
+                        }
+                        textView2.setText(things[2]);
 
-                    displayImage(things[1]);
-                    textView3.setText(things[0]);
-                    textview.setText(things[3]);
-                    textView2.setText(things[2]);
-
+                    }
                 }
             }
 
